@@ -3,6 +3,9 @@ package com.example.demo.utils;
 import com.example.demo.services.CustomUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,11 +26,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder()
+    public BCryptPasswordEncoder passwordEncoder()
     {
         return new BCryptPasswordEncoder();
     }
-
+    @Bean
+    public JavaMailSender javaMailSender()
+    {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        return mailSender;
+    }
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -39,11 +47,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
         return http.csrf().disable().authorizeHttpRequests(auth -> auth
-                .requestMatchers("/css/**","/js/**","/","/register","/error")
+                .requestMatchers("/css/**","/js/**","/","/register","/error","/forgot_password")
                 .permitAll()
                 .requestMatchers("/books/edit", "/books/delete")
                 .hasAnyAuthority("ADMIN")
                 .requestMatchers("/books", "/books/add")
+                .hasAnyAuthority("ADMIN","USER")
+                .requestMatchers("/api/**")
                 .hasAnyAuthority("ADMIN","USER")
                 .anyRequest().authenticated()
         ).logout(logout -> logout.logoutUrl("/logout")

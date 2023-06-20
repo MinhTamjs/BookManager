@@ -34,12 +34,16 @@
                         <input type="checkbox" id="remember-me" name="remember-me">
                         <label for="remember-me">Remember me</label>
                     </div>
+
                     <div class="d-grid gap-2 form-action">
                         <button type="submit" class="btn btn-primary">Login</button>
                         <a class="text-primary text-cipher" href="/register">Don't have account. Sign up?</a>
                     </div>
                 </fieldset>
             </form>
+            <div class="mb-3">
+                <a th:href="@{/forgot_password}">Forgot your password?</a>
+            </div>
         </div>
     </div>
 </div>

@@ -10,11 +10,11 @@
 <div class="container">
   <h1>Add Book</h1>
   <form th:action="@{/books/add}" th:object="${book}" method="post">
-    <div class="col-6 mb-3">
-      <lable class="form-label" for="title">Id:</lable>
-      <input class="form-control" type="text" th:field="*{id}" id="id">
+<!--    <div class="col-6 mb-3">-->
+<!--      <lable class="form-label" for="title">Id:</lable>-->
+<!--      <input class="form-control" type="text" th:field="*{id}" id="id">-->
 
-    </div>
+<!--    </div>-->
     <div class="col-6 mb-3">
       <lable class="form-label" for="title">Title:</lable>
       <input class="form-control" type="text" th:field="*{title}" id="title">

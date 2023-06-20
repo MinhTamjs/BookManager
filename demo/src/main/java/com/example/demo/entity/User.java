@@ -39,12 +39,37 @@ public class User {
     @NotBlank(message = "Your name is required")
     private String name;
 
+    private boolean enabled;
+
+    public String getTokenforgotpassword() {
+        return tokenforgotpassword;
+    }
+
+    public void setTokenforgotpassword(String tokenforgotpassword) {
+        this.tokenforgotpassword = tokenforgotpassword;
+    }
+
+    @Column(name = "forgot_password_reset",nullable = true, length = 255)
+    private String tokenforgotpassword;
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    @Column(name = "verification_code", length = 255)
+    private String verificationCode;
+
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
+
 
     public Long getId() {
         return id;
@@ -84,5 +109,16 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+    public boolean getEnabled() {
+        return enabled;
     }
 }
